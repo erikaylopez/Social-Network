@@ -28,9 +28,9 @@ module.exports = {
 
     // get one user by id
 
-    async getUserById({ params }, res) {
+    async getUserById(req, res) {
         try {
-            const dbUserData = await User.findOne({ _id: params.id }).populate('thoughts').populate('friends');
+            const dbUserData = await User.findOne({ _id: req.params.id }).populate("thoughts");
             if (!dbUserData) {
                 res.status(404).json({ message: 'No user found with this id!' });
                 return;
@@ -114,19 +114,4 @@ module.exports = {
         }
     }
 };
-    try {
-        const dbUserData = await User.findOneAndUpdate(
-            { _id: params.userId },
-            { $pull: { friends: params.friendId } },
-            { new: true }
-        );
-        if (!dbUserData) {
-            res.status(404).json({ message: 'No user found with this id!' });
-            return;
-        }
-        res.json(dbUserData);
-    } catch (err) {
-        console.log(err);
-        res.status(500).json(err);
-    }
 
