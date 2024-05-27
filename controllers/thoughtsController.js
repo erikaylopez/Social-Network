@@ -46,6 +46,7 @@ const thoughtsController = {
             res.status(500).json(err);
         }
     },
+    
     createThought: async ({ body }, res) => {
         try {
             const dbThoughtData = await Thoughts.create(body);
@@ -55,7 +56,7 @@ const thoughtsController = {
                 { new: true }
             );
             if (!dbUserData) {
-                res.status(404).json({ message: 'No user found with this username!' });
+                res.status(404).json({ message: 'No user found with this id!' });
                 return;
             }
             res.json(dbThoughtData);
@@ -63,7 +64,9 @@ const thoughtsController = {
             console.log(err);
             res.status(500).json(err);
         }
-    },
+    }
+    ,
+
     updateThought: async ({ params, body }, res) => {
         try {
             const dbThoughtData = await Thoughts.findOneAndUpdate({ _id: params.id }, body, { new: true, runValidators: true });
